@@ -105,8 +105,8 @@ def proxy_handler(client_socket,remote_host,remote_port,receive_first):
             
         if "\x03\xf2" in local_buffer:
 
-            for i in range(0,257): 
-                for j in range(0,257): 
+            for i in range(254,256): 
+                for j in range(254,256): 
             # send it to our request handler
                     str = "0x{:02x}".format(i) + "0x{:02x}".format(j)
                     str = str.replace("0x","\\x")
