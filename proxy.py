@@ -76,28 +76,28 @@ def proxy_handler(client_socket,remote_host,remote_port,receive_first):
             for i in range(0,257): 
                 for j in range(0,257): 
             # send it to our request handler
-                str = "0x{:02x}".format(i) + "0x{:02x}".format(j)
-                str = str.replace("0x","\\x")
-                local_buffer = request_handler(local_buffer.replace("\x03\xf2",str))
+                    str = "0x{:02x}".format(i) + "0x{:02x}".format(j)
+                    str = str.replace("0x","\\x")
+                    local_buffer = request_handler(local_buffer.replace("\x03\xf2",str))
 
-                # send it off to the remote host
-                print "[*] Buffer = %s" % local_buffer
-                remote_socket.send(local_buffer)
-                print "[*] Sent to remote."
+                    # send it off to the remote host
+                    print "[*] Buffer = %s" % local_buffer
+                    remote_socket.send(local_buffer)
+                    print "[*] Sent to remote."
 
-            # receive the response back
-                remote_buffer = receive_from(remote_socket)
+                # receive the response back
+                    remote_buffer = receive_from(remote_socket)
 
-                if len(remote_buffer):
-                    print "[*] Received %d bytes from remote." % len(remote_buffer)
-                    hexdump(remote_buffer)
+                    if len(remote_buffer):
+                        print "[*] Received %d bytes from remote." % len(remote_buffer)
+                        hexdump(remote_buffer)
 
-                    # send it to our handler
-                    remote_buffer = response_handler(remote_buffer)
+                        # send it to our handler
+                        remote_buffer = response_handler(remote_buffer)
 
-                    # sent it to the local host
-                    client_socket.send(remote_buffer)
-                    print "[*] Sent to local."
+                        # sent it to the local host
+                        client_socket.send(remote_buffer)
+                        print "[*] Sent to local."
             
         # if nothing left to send, close down connections
         if not len(remote_buffer) or not len(local_buffer):
